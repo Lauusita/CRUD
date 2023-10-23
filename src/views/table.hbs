@@ -1,0 +1,87 @@
+{{>navbar}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body >
+    <section class="intro">
+    <div class="gradient-custom-1 h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="table-responsive bg-white">
+                <div class="form-outline mb-4 mt-5">
+                    <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" maxlength="10" minlength="2" class="form-control form-control-lg" style="border-color: black;"/>
+                    
+                  </div>
+                <table id="tabla" class="table mb-0 table-dark table-striped" >
+                  <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cédula</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Nacimiento</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each table}}
+                    <tr>
+                        <td>{{@index}}</td> 
+                        <td>{{cedula}}</td>
+                        <td>{{nombre}}</td>
+                        <td>{{apellido}}</td>
+                        <td>{{Nacimiento}}</td>
+                        <td>{{edad}}</td>
+                        <td>{{Telefono}}</td>
+                        <td>{{Direccion}}</td>
+                        
+                        <td>
+                            <a href="edit/{{_id}}" style="background-color: rgb(255, 255, 255); text-decoration: none; border-radius: 5px; color: rgb(0, 0, 0);">Update</a>
+                            <a href="delete/{{_id}}"  style="background-color: rgb(255, 255, 255); text-decoration: none; border-radius: 5px; color: rgb(0, 0, 0);">Delete</a>
+                        </td>
+                        
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+    <script>
+        const onInputChange = ()=>{ // se crea una función la cual contendrá las acciones a realizar para buscar 
+            let inputText = document.getElementById('busqueda').value.toString().toLowerCase(); // se extrae el valor del input búsqueda, y se envuelve en funciones como toString y toLoweCase para iguarlo en sensibilidad
+
+            let elementBody = document.getElementById('tabla'); // se extraen los valores de la tabla
+            let tableRow = elementBody.getElementsByTagName('tr'); // del elementBody, se extrae el contenido de todas las etiquetas tr
+            for ( let i = 1; i < tableRow.length; i++){ // se hace un bucle con el fin de recorrer ese listado de tableRow
+              
+              let consultar = tableRow[i].cells[2].textContent.toString().toLowerCase() // se declara una variable consultar la cual contendrá el valor de i en la tabla, más la celda mencionada (columna en índice 2 con el fin de obtener el valor del nombre), extrayendo el contenido del texto, pasándolo por el mismo proceso para igualar en sensibilidad
+              if (consultar.indexOf(inputText) === -1 ){ // si consultar no devolvía ningún índice entonces esa fila se eliminaría visualmente
+                tableRow[i].style.visibility = "collapse";
+              }else{
+                tableRow[i].style.visibility = ""
+              }
+            }
+            console.log(tableRow)
+        }
+        document.getElementById('busqueda').addEventListener('input', onInputChange)
+    </script>
+  </body>
+</html>
