@@ -36,8 +36,6 @@ const postLogin = async(req = request, res = response)=>{
         console.log(Password)
         console.log(admin.Password)
 
-        const token = await generarJWT( admin.id);
-        console.log(token)
         
         if ( Password === await admin.Password ){
             return res.redirect('/enter/registro')
